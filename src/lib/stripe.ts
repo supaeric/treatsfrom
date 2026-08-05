@@ -7,9 +7,10 @@ export function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) {
     throw new Error(
-      "STRIPE_SECRET_KEY is not set. Copy .env.example to .env.local and add your key."
+      "STRIPE_SECRET_KEY is not set. Add it in Vercel under Settings > Environment Variables."
     );
   }
-  cached = new Stripe(key, { apiVersion: "2024-12-18.acacia" });
+  // No apiVersion pin: the SDK uses the version your account is set to.
+  cached = new Stripe(key);
   return cached;
 }
