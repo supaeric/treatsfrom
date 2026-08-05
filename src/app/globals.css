@@ -173,7 +173,7 @@
   }
 }
 
-/* Hero wordmark cycles through destinations on load only — not a loop. */
+/* Hero wordmark stamp animation, played on change rather than looping. */
 @keyframes stamp-in {
   0% {
     opacity: 0;

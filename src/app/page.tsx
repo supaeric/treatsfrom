@@ -1,22 +1,39 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import ProductCard from "@/components/ProductCard";
 import AirmailRule from "@/components/AirmailRule";
-import { countries, liveCountries, upcomingCountries } from "@/content/countries";
-import { JsonLd, faqJsonLd } from "@/lib/seo";
+import FaqList from "@/components/FaqList";
+import { countries, liveCountries } from "@/content/countries";
+import { site, deliveryLabel } from "@/content/site";
+import { money } from "@/lib/format";
+import { JsonLd, faqJsonLd, itemListJsonLd } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  title: "South African Snacks Online in the USA | Treats From",
+  description:
+    "Buy South African snacks online in the USA and Canada. Ouma Rusks, Peppermint Crisp, Simba and biltong, delivered from within the US. Free US shipping over $30.",
+  alternates: { canonical: "/" },
+};
 
 const homeFaqs = [
   {
-    q: "Where does my box actually ship from?",
-    a: "Ohio. We import by the pallet, clear customs once, and warehouse everything here — so your order moves as a domestic parcel and lands in 2-4 business days.",
+    q: "How long does delivery take?",
+    a: `${deliveryLabel("US")} to anywhere in the United States, and ${deliveryLabel(
+      "CA"
+    )} to Canada. We email tracking as soon as your box is on its way.`,
   },
   {
-    q: "Do I pay import duties?",
-    a: "No. Duties are paid once, by us, at the border. The price you see is the price you pay.",
+    q: "Do I pay customs or import duty?",
+    a: "No. Your order ships from within the United States, so there is nothing to declare and no bill waiting at the door. The price you see is what you pay.",
   },
   {
-    q: "Which countries can you deliver to?",
-    a: "The United States and Canada. Mexico is next on our list.",
+    q: "How fresh are the snacks?",
+    a: "We never ship anything with less than four months of shelf life left, and most items arrive with a good deal more than that.",
+  },
+  {
+    q: "Can I send a box as a gift?",
+    a: "Yes. Add a handwritten note at checkout at no cost, and we ship to any US or Canadian address with no receipt in the box.",
   },
 ];
 
@@ -28,70 +45,48 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={faqJsonLd(homeFaqs)} />
+      {featured.length > 0 && (
+        <JsonLd data={itemListJsonLd(featured, "Snack boxes in stock")} />
+      )}
+
       <Hero />
 
-      {/* The problem this business solves, stated plainly. */}
-      <section className="shell py-20">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div>
-            <p className="label text-post">The difference</p>
-            <h2 className="display mt-4 text-4xl sm:text-5xl">
-              Everyone else posts it from overseas
-            </h2>
-          </div>
-          <div className="space-y-5 text-lg text-muted">
-            <p>
-              That is why an order takes five weeks, arrives crushed, costs $40
-              to ship, and occasionally gets held at the border for a duty
-              payment nobody warned you about.
-            </p>
-            <p className="text-ink">
-              We do the importing once, in bulk, so you do not have to do it at
-              all. Your box leaves an Ohio warehouse the same way a domestic
-              order does — because that is exactly what it is.
-            </p>
-          </div>
-        </div>
-
-        <ol className="mt-16 grid gap-px border-2 border-ink bg-ink sm:grid-cols-3">
+      {/* Trust bar: the four things a first-time buyer checks before scrolling. */}
+      <section className="border-b-2 border-ink bg-panel">
+        <div className="shell grid grid-cols-2 gap-x-6 gap-y-6 py-8 lg:grid-cols-4">
           {[
-            [
-              "We buy at source",
-              "Direct from wholesalers in each country. Real branded product, never grey-market repacks.",
-            ],
-            [
-              "We fly it in",
-              "Air freight by the pallet, cleared and duty-paid at the border once, in bulk.",
-            ],
-            [
-              "You get it in days",
-              "Packed to order in Ohio and shipped domestically across the US and Canada.",
-            ],
-          ].map(([title, copy], idx) => (
-            <li key={title} className="bg-paper p-7">
-              <span className="label text-post">
-                Step {String(idx + 1).padStart(2, "0")}
-              </span>
-              <h3 className="display mt-3 text-2xl">{title}</h3>
-              <p className="mt-3 text-muted">{copy}</p>
-            </li>
+            ["Free US shipping", `On orders over ${money(site.freeShipping.US)}`],
+            ["Nothing to declare", "No customs forms, no duty"],
+            ["Always fresh", "Four months minimum shelf life"],
+            ["Gift ready", "Free handwritten note"],
+          ].map(([title, sub]) => (
+            <div key={title}>
+              <p className="display text-lg sm:text-xl">{title}</p>
+              <p className="label mt-1 text-muted">{sub}</p>
+            </div>
           ))}
-        </ol>
+        </div>
       </section>
 
-      <AirmailRule />
-
-      {/* Products */}
-      <section className="shell py-20">
+      {/* Products first. This is what people came for. */}
+      <section className="shell py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="label text-post">In stock now</p>
-            <h2 className="display mt-3 text-4xl sm:text-5xl">The boxes</h2>
+            <p className="label text-post">Shipping now</p>
+            <h2 className="display mt-3 text-4xl sm:text-5xl">
+              South African snack boxes
+            </h2>
           </div>
           <Link href="/treats-from/south-africa" className="btn btn-ghost">
-            Shop all
+            See all boxes
           </Link>
         </div>
+
+        <p className="mt-4 max-w-2xl text-lg text-muted">
+          Rusks, Peppermint Crisp, Simba, Romany Creams and the rest of the
+          tuck shop shelf. Packed to order and delivered anywhere in the US in{" "}
+          {deliveryLabel("US")}.
+        </p>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map(({ country, product }, idx) => (
@@ -105,12 +100,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Roadmap — this section grows on its own as you add countries */}
-      <section id="route-map" className="bg-ink py-20 text-paper">
+      <AirmailRule />
+
+      {/* Why buy from us: benefits, not process. */}
+      <section className="shell py-16">
+        <h2 className="display text-4xl sm:text-5xl">
+          Why order from us
+        </h2>
+        <div className="mt-10 grid gap-px border-2 border-ink bg-ink sm:grid-cols-3">
+          {[
+            [
+              "The real thing",
+              "Everything we sell is the version sold at home, not a recipe reformulated for the American market. If the wrapper looks right, the bar tastes right.",
+            ],
+            [
+              "Here, not overseas",
+              "We hold stock in the United States, so your order arrives like any other domestic parcel. No customs paperwork, no duty, and no waiting a month and a half.",
+            ],
+            [
+              "Packed for giving",
+              "Boxes arrive in a rigid gift box with paper padding rather than loose in a mailer. Add a handwritten note free, and we leave the receipt out.",
+            ],
+          ].map(([title, copy]) => (
+            <div key={title} className="bg-paper p-7">
+              <h3 className="display text-2xl">{title}</h3>
+              <p className="mt-3 text-muted">{copy}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Roadmap. Grows on its own as you add countries. */}
+      <section id="route-map" className="bg-ink py-16 text-paper">
         <div className="shell">
-          <p className="label text-kraft">The route map</p>
+          <p className="label text-kraft">More countries</p>
           <h2 className="display mt-3 text-4xl sm:text-5xl">
-            Where we are landing next
+            What we&apos;re adding next
           </h2>
           <ul className="mt-10 divide-y divide-paper/15 border-y border-paper/15">
             {countries.map((c) => (
@@ -129,13 +154,29 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-          {upcomingCountries.length > 0 && (
-            <p className="mt-8 max-w-lg text-paper/60">
-              Want somewhere that is not on this list? Tell us and we will look
-              at the freight.
-            </p>
-          )}
+          <p className="mt-8 max-w-lg text-paper/60">
+            Somewhere you want that isn&apos;t listed? Tell us and we&apos;ll
+            look into it.
+          </p>
         </div>
+      </section>
+
+      <section className="shell py-16">
+        <h2 className="display text-4xl sm:text-5xl">Before you order</h2>
+        <div className="mt-8">
+          <FaqList faqs={homeFaqs} />
+        </div>
+        <p className="mt-8 text-muted">
+          More detail on our{" "}
+          <Link href="/shipping" className="underline underline-offset-4">
+            shipping and returns page
+          </Link>{" "}
+          and in the{" "}
+          <Link href="/faq" className="underline underline-offset-4">
+            full FAQ
+          </Link>
+          .
+        </p>
       </section>
     </>
   );

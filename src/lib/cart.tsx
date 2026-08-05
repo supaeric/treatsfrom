@@ -41,7 +41,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setLines(parsed.filter((l) => findByProductId(l.id)));
       }
     } catch {
-      // Corrupt or unavailable storage — start empty rather than crash.
+      // Corrupt or unavailable storage. Start empty rather than crash.
     }
     setReady(true);
   }, []);
@@ -51,7 +51,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
     } catch {
-      // Private mode or quota — the cart still works for this session.
+      // Private mode or quota. The cart still works for this session.
     }
   }, [lines, ready]);
 

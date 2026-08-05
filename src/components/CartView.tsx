@@ -56,7 +56,7 @@ export default function CartView() {
       <div className="mt-10 max-w-lg border-2 border-ink bg-panel p-8">
         <p className="display text-2xl">Nothing in here yet</p>
         <p className="mt-3 text-muted">
-          Pick a box and we will get it moving. Free US shipping over{" "}
+          Pick a box and we'll get it moving. Free US shipping over{" "}
           {money(site.freeShipping.US)}.
         </p>
         <Link href="/treats-from/south-africa" className="btn btn-primary mt-6">

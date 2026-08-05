@@ -15,7 +15,7 @@ export default function OrderConfirmedPage() {
       <h1 className="display mt-8 text-5xl sm:text-6xl">Your box is booked</h1>
       <p className="mt-6 max-w-xl text-lg text-muted">
         A confirmation is on its way to your inbox. We pack Monday to Friday
-        and email tracking the moment your box leaves the warehouse in Ohio.
+        and email tracking as soon as your box leaves the warehouse.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <Link href="/" className="btn btn-primary">

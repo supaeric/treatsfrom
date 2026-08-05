@@ -20,7 +20,7 @@ export default function Header() {
           onClick={() => setOpen(false)}
         >
           <Wordmark />
-          <span className="sr-only">Treats From — home</span>
+          <span className="sr-only">Treats From, home</span>
         </Link>
 
         <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
@@ -83,6 +83,8 @@ export default function Header() {
               ["/shipping", "Shipping"],
               ["/faq", "FAQ"],
               ["/about", "About"],
+              ["/privacy-policy", "Privacy"],
+              ["/terms", "Terms"],
             ].map(([href, label]) => (
               <li key={href}>
                 <Link

@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { liveCountries, countries } from "@/content/countries";
 
 /**
- * HERO VIDEO — how to swap in your footage
+ * HERO VIDEO: how to swap in your footage
  *
  * 1. Export two files and put them in /public/media:
  *      hero.mp4   (H.264, 1080x1920 portrait, ~6-10s loop, no audio)
- *      hero.webm  (VP9, same source — smaller, served first where supported)
+ *      hero.webm  (VP9, same source, smaller, served first where supported)
  *    Also export hero-poster.jpg (first frame, ~120KB, same dimensions).
  * 2. Set HERO_VIDEO to true below.
  *
@@ -85,7 +85,7 @@ export default function Hero() {
 
       <div className="shell py-20 sm:py-28 lg:py-36">
         <p className="label text-muted">
-          Imported in bulk · Packed in Ohio · Shipped in 2-4 days
+          Free US shipping over $30 · Delivered in 7-10 days
         </p>
 
         <h1 className="display mt-5 text-[clamp(2.9rem,13vw,7.5rem)]">
@@ -105,8 +105,8 @@ export default function Hero() {
         </h1>
 
         <p className="mt-7 max-w-xl text-lg text-muted sm:text-xl">
-          The snacks you grew up with, without the six-week wait or the customs
-          form. We fly them in by the pallet and post them from Ohio.
+          Rusks, Peppermint Crisp, Simba and the rest of what you actually
+          miss. Boxed, and on its way to you within a week.
         </p>
 
         <div className="mt-9 flex flex-wrap gap-3">
@@ -120,8 +120,8 @@ export default function Hero() {
 
         <dl className="mt-14 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3">
           {[
-            ["2-4 days", "Typical US delivery"],
-            ["$30+", "Ships free in the US"],
+            ["7-10 days", "Delivered across the US"],
+            ["$30+", "Ships free"],
             ["4 months", "Minimum shelf life"],
           ].map(([value, label]) => (
             <div key={label} className="border-t-2 border-ink pt-3">

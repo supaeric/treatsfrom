@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         currency: "usd",
         unit_amount: product.priceCents,
         product_data: {
-          name: `${product.name} — Treats from ${country.name}`,
+          name: `${product.name}, Treats from ${country.name}`,
           description: product.tagline,
           metadata: { sku: line.id, origin: country.code },
         },
@@ -71,7 +71,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "Those boxes cannot ship to the same place. The Braai Box is US-only because of meat import rules — please order it separately.",
+          "Those boxes can't ship to the same place. The Braai Box is US only because of meat import rules, so please order it separately.",
       },
       { status: 400 }
     );
@@ -83,14 +83,22 @@ export async function POST(request: Request) {
     return {
       shipping_rate_data: {
         type: "fixed_amount" as const,
-        display_name: free ? `Free ${code} Shipping` : rate.label,
+        display_name: free
+          ? `Free ${code} Shipping (${site.delivery[code].label})`
+          : `${rate.label} (${site.delivery[code].label})`,
         fixed_amount: {
           amount: free ? 0 : rate.cents,
           currency: "usd",
         },
         delivery_estimate: {
-          minimum: { unit: "business_day" as const, value: code === "US" ? 2 : 4 },
-          maximum: { unit: "business_day" as const, value: code === "US" ? 4 : 8 },
+          minimum: {
+            unit: "business_day" as const,
+            value: site.delivery[code].min,
+          },
+          maximum: {
+            unit: "business_day" as const,
+            value: site.delivery[code].max,
+          },
         },
       },
     };

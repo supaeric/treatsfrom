@@ -3,7 +3,7 @@ import type { Country, Product } from "@/content/types";
 
 /**
  * Renders real product photography when `product.image` is set, and a
- * designed placeholder panel when it is not — so the site never shows a
+ * designed placeholder panel when it is not, so the site never shows a
  * broken image while you are still shooting product.
  *
  * To swap in a real photo: drop the file in /public/media and set
@@ -24,7 +24,7 @@ export default function BoxImage({
     return (
       <Image
         src={product.image}
-        alt={product.imageAlt ?? `${product.name} — ${country.demonym} snack box`}
+        alt={product.imageAlt ?? `${product.name}, a ${country.demonym} snack box`}
         fill
         sizes={sizes}
         priority={priority}

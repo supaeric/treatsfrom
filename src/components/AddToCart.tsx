@@ -30,7 +30,7 @@ export default function AddToCart({
       </button>
       {added && (
         <Link href="/cart" className="label underline underline-offset-4">
-          Added — view cart
+          Added, view cart
         </Link>
       )}
     </div>

@@ -34,7 +34,7 @@ This is the whole job. Two steps, no code changes anywhere else.
 
 ```ts
 import { japan } from "./japan";
-export const countries: Country[] = [southAfrica, australia, unitedKingdom, japan];
+export const countries: Country[] = [southAfrica, unitedKingdom, japan, yourCountry];
 ```
 
 That automatically generates: the `/treats-from/japan` page, a page for every
@@ -182,15 +182,15 @@ Portal and every historical order is already attached. No migration.
 
 ---
 
-## Legal before launch
+## Legal
 
-Not included, and you should not launch without them:
+`/privacy-policy`, `/terms` and `/accessibility` are included, written to the
+pattern US food e-commerce sites follow. **They are templates, not legal
+advice.** Before launch, have a lawyer check them and confirm:
 
-- Privacy policy and terms of service
-- Cookie/analytics notice if you add analytics
-- FDA prior notice for imported food shipments
-- State sales tax registration where you have nexus
-- Confirmation that any meat product you import is USDA-permitted
+- The governing-law state matches where you actually operate (currently the US)
+- FDA prior notice is filed for every imported food shipment
+- Sales tax is registered wherever you have nexus
+- Any meat product you import is USDA-permitted
 
-Get the food import and tax positions checked by someone qualified. Those are
-the two that carry real penalties.
+The food import and tax positions are the two that carry real penalties.

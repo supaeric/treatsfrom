@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { allProducts, getProduct } from "@/content/countries";
 import { money, weight } from "@/lib/format";
-import { site } from "@/content/site";
+import { site, deliveryLabel } from "@/content/site";
 import AddToCart from "@/components/AddToCart";
 import BoxImage from "@/components/BoxImage";
 import ProductCard from "@/components/ProductCard";
@@ -23,17 +23,18 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const hit = getProduct(cSlug, pSlug);
   if (!hit) return {};
   const { country, product } = hit;
-  const title = `${product.name} — ${product.itemCount} ${country.demonym} Treats`;
+  const title = `${product.name} | ${product.itemCount} ${country.demonym} Snacks Delivered in the USA`;
+  const description = `${product.tagline} ${product.itemCount} ${country.demonym} snacks shipped from within the US in 7-10 days. No customs form, no import duty.`;
   return {
     title,
-    description: `${product.tagline} ${product.description.slice(0, 110)}...`,
+    description,
     alternates: {
       canonical: `/treats-from/${country.slug}/${product.slug}`,
     },
     openGraph: {
       type: "website",
       title,
-      description: product.tagline,
+      description,
       url: `/treats-from/${country.slug}/${product.slug}`,
     },
   };
@@ -54,6 +55,7 @@ export default async function ProductPage({ params }: Params) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
+          { name: "Shop all", path: "/treats-from" },
           { name: country.name, path: `/treats-from/${country.slug}` },
           {
             name: product.name,
@@ -126,6 +128,25 @@ export default async function ProductPage({ params }: Params) {
           </ul>
 
           <p className="mt-8 text-muted">{product.description}</p>
+          {product.detail && (
+            <p className="mt-4 text-muted">{product.detail}</p>
+          )}
+
+          {product.bestFor && product.bestFor.length > 0 && (
+            <>
+              <h2 className="display mt-8 text-xl">Who this box suits</h2>
+              <ul className="mt-3 space-y-2 text-muted">
+                {product.bestFor.map((b) => (
+                  <li key={b} className="flex gap-3">
+                    <span aria-hidden className="text-post">
+                      &#9679;
+                    </span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
 
           <dl className="mt-8 grid grid-cols-2 gap-4 border-t-2 border-ink pt-6">
             <div>
@@ -160,19 +181,25 @@ export default async function ProductPage({ params }: Params) {
               ))}
             </ul>
             <p className="mt-4 text-sm text-muted">
-              Contents vary slightly with stock. If something is out we swap in
-              a like-for-like favourite, never a downgrade.
+              Contents vary a little with stock. If something&apos;s out we swap in
+              a similar favourite of the same value.
             </p>
           </div>
 
           <div>
             <h2 className="display text-3xl">Allergens</h2>
             <p className="mt-6 text-muted">{product.allergens}</p>
-            <h2 className="display mt-10 text-3xl">Delivery</h2>
+            <h2 className="display mt-10 text-3xl">Delivery to the USA and Canada</h2>
             <p className="mt-6 text-muted">
-              Packed and shipped from Ohio. US orders arrive in 2-4 business
-              days, Canadian orders in 4-8. Tracking is emailed the moment your
-              box leaves the warehouse.
+              Packed to order and shipped from within the US. US orders arrive
+              in {deliveryLabel("US")} and Canadian orders in{" "}
+              {deliveryLabel("CA")}. We email tracking as soon as your box is
+              on its way. Full rates and our returns policy
+              are on the{" "}
+              <Link href="/shipping" className="underline underline-offset-4">
+                shipping page
+              </Link>
+              .
             </p>
           </div>
         </div>

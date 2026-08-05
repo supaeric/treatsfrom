@@ -8,7 +8,7 @@ export default function NotFound() {
         No such address
       </h1>
       <p className="mt-6 max-w-lg text-lg text-muted">
-        This page does not exist, or the box moved. Try the shop instead.
+        This page doesn&apos;t exist. Try the shop instead.
       </p>
       <Link href="/" className="btn btn-primary mt-9">
         Back to the shop

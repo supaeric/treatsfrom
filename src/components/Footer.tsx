@@ -8,14 +8,14 @@ export default function Footer() {
   return (
     <footer className="mt-24 bg-ink text-paper">
       <AirmailRule />
-      <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="sm:col-span-2">
           <Link href="/" className="text-2xl">
             <Wordmark />
           </Link>
           <p className="mt-3 max-w-sm text-sm text-paper/70">
-            {site.tagline} We import in bulk, warehouse in Ohio, and ship
-            domestically across the US and Canada.
+            {site.tagline} We import in bulk, warehouse in the US, and ship
+            across the US and Canada.
           </p>
           <p className="label mt-6 text-paper/50">
             Ships to United States &amp; Canada
@@ -65,6 +65,27 @@ export default function Footer() {
               <a href={`mailto:${site.email}`} className="hover:text-kraft">
                 {site.email}
               </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="label text-paper/50">Legal</h2>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li>
+              <Link href="/privacy-policy" className="hover:text-kraft">
+                Privacy policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/terms" className="hover:text-kraft">
+                Terms of service
+              </Link>
+            </li>
+            <li>
+              <Link href="/accessibility" className="hover:text-kraft">
+                Accessibility
+              </Link>
             </li>
           </ul>
         </div>
